@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
+</head>
+
+<body>
+  <label for="from">Başlangıç Tarihi:</label>
+  <input type="text" id="from" name="from">
+  <label for="to">Bitiş Tarihi:</label>
+  <input type="text" id="to" name="to">
+
+
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script>
+    $(function () {
+      var dateFormat = "mm/dd/yy",
+        from = $("#from")
+          .datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 1
+          })
+          .on("change", function () {
+            to.datepicker("option", "minDate", getDate(this));
+          }),
+        to = $("#to").datepicker({
+          defaultDate: "+1w",
+          changeMonth: true,
+          numberOfMonths: 1
+        })
+          .on("change", function () {
+            from.datepicker("option", "maxDate", getDate(this));
+          });
+
+      function getDate(element) {
+        var date;
+        try {
+          date = $.datepicker.parseDate(dateFormat, element.value);
+        } catch (error) {
+          date = null;
+        }
+        return date;
+      }
+    });
+
+  </script>
+</body>
+
+</html>
